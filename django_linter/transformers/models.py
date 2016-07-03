@@ -48,3 +48,7 @@ def transform_model_class(cls):
             else:
                 cls.locals['id'] = [Instance(AutoField)]
 
+    if cls.is_subtype_of('django.db.models.manager.Manager'):
+        for method in cls.methods():
+            if method.parent is None:
+                method.parent = cls
